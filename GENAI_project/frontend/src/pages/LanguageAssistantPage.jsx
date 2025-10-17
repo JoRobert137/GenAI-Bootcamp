@@ -39,28 +39,30 @@ function LanguageAssistantPage() {
 
     const userMessage = { role: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
+    const currentInput = input; // preserve current message before clearing
+    setInput("");
     setLoading(true);
 
     try {
+      // ✅ Call updated backend route
       const res = await axios.post("http://localhost:8080/api/translate", {
         message: input,
         language: targetLang,
       });
 
-      const { detectedLanguage, translatedText } = res.data;
+      const translatedText =
+        res.data?.reply?.trim() ||
+        res.data?.trim?.() ||
+        "⚠️ Sorry, translation not available.";
 
       const botReply = {
         role: "bot",
         structured: [
           {
-            type: "summary",
-            text: `Detected: ${getLangName(detectedLanguage)} → ${getLangName(targetLang)}`
-          },
-          {
             type: "text",
-            text: translatedText || "No translation found."
-          }
-        ]
+            text: translatedText,
+          },
+        ],
       };
 
       setMessages((prev) => [...prev, botReply]);
@@ -68,10 +70,12 @@ function LanguageAssistantPage() {
       console.error("Translation API error:", err);
       const botReply = {
         role: "bot",
-        structured: [{
-          type: "text", 
-          text: "⚠️ Sorry, there was an error processing your request."
-        }]
+        structured: [
+          {
+            type: "text",
+            text: "⚠️ Sorry, there was an error processing your request.",
+          },
+        ],
       };
       setMessages((prev) => [...prev, botReply]);
     } finally {
@@ -79,6 +83,7 @@ function LanguageAssistantPage() {
       setInput("");
     }
   };
+
 
   return (
     <div className="flex h-screen bg-purple-50 text-gray-900 pt-16">
@@ -97,7 +102,7 @@ function LanguageAssistantPage() {
         }}
       />
 
-      {/* Sidebar */}
+
       <Sidebar
         title="Language Assistant 🌐"
         subtitle="Your Regional AI Guide"
@@ -106,14 +111,17 @@ function LanguageAssistantPage() {
         recentChats={["Legal document translation", "Government scheme explanation", "Technical term simplification"]}
         footerNote="Supports 10+ Indian languages"
         appName="CivicConnect AI"
+        className="pt-16"
+
       />
 
-      {/* Main Chat Area */}
       <main className="flex-1 flex flex-col bg-white/80 backdrop-blur-sm border-l border-white/20">
+
         {/* Header */}
         <header className="p-4 border-b border-white/20 bg-purple-100/50 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-purple-800">
             Local Language Assistant
+
           </h2>
           <div className="flex items-center gap-3">
             <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">🌐 Multilingual</span>
@@ -137,21 +145,20 @@ function LanguageAssistantPage() {
           </div>
         </header>
 
-        {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`flex ${
-                msg.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
+
                 className={`max-w-xl px-4 py-3 rounded-2xl shadow-sm whitespace-pre-wrap ${
                   msg.role === "user"
                     ? "bg-purple-600 text-white rounded-br-none"
                     : "bg-white text-purple-800 border border-purple-200 rounded-bl-none"
                 }`}
+
               >
                 {msg.role === "user" ? (
                   <p>{msg.text}</p>
@@ -187,24 +194,30 @@ function LanguageAssistantPage() {
           )}
         </div>
 
+
         {/* Input Box */}
         <div className="p-4 border-t border-white/20 bg-purple-100/50 flex items-center gap-3">
+
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+
             placeholder="Type or paste text to translate or simplify..."
             className="flex-1 border border-purple-200 rounded-full px-4 py-2 text-purple-800 placeholder-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400 transition"
+
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
           />
           <button
             onClick={handleSend}
             disabled={loading}
+
             className={`px-5 py-2 rounded-full text-white font-semibold transition ${
               loading
                 ? "bg-purple-400 cursor-not-allowed"
                 : "bg-purple-600 hover:bg-purple-700"
             }`}
+
           >
             {loading ? "Translating..." : "Send"}
           </button>

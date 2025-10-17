@@ -44,20 +44,25 @@ function handleTalk2GovChat(req, res) {
         });
 }
 
-function handleLocalLanguageChat(req, res) {
-    const { message, language } = req.body;
-    if (!message) return res.status(400).json({ error: "Message is required" });
+async function handleLocalLanguageChat(req, res) {
+    try {
+        const { message, language } = req.body;
 
-    const prompt = promptManager.getLocalLanguagePrompt(
-        `${message}\nTranslate this into ${language || 'the user’s regional language'}`
-    );
+        if (!message) return res.status(400).json({ error: "Message is required" });
+        if (!language) return res.status(400).json({ error: "Target language is required" });
 
-    geminiService.getGeminiResponse(prompt)
-        .then(aiReply => res.json({ reply: aiReply }))
-        .catch(err => {
-            console.error("Local Language Assistant Error:", err);
-            res.status(500).json({ error: "Internal Server Error" });
-        });
+        // Create prompt with target language
+        const prompt = promptManager.getLocalLanguagePrompt(message, language);
+
+        // Get plain translated text
+        const translation = await geminiService.getTranslation(prompt);
+
+        // Return only the translated text
+        res.json({ reply: translation });
+    } catch (err) {
+        console.error("Local Language Assistant Error:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 }
 
 module.exports = { handleUnifiedChat, handleLawBotChat,handleTalk2GovChat,handleLocalLanguageChat };

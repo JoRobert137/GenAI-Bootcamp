@@ -2,7 +2,6 @@ const axios = require('axios');
 require('dotenv').config();
 
 const MODEL_NAME = process.env.MODEL_NAME; 
-console.log("Using Gemini Model:", MODEL_NAME);
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent`;
 
@@ -109,4 +108,46 @@ const generateResponse = async (prompt, temperature = 0.3, top_p = 0.7) => {
     }
 };
 
-module.exports = { getGeminiResponse: generateResponse };
+
+
+
+const generateTranslation = async (prompt) => {
+    try {
+
+        const response = await axios.post(
+            GEMINI_API_URL,
+            {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    temperature: 0.3,
+                    topP: 0.7,
+                    maxOutputTokens: 1000,
+                },
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-goog-api-key": GEMINI_API_KEY,
+                },
+            }
+        );
+
+        const translatedText =
+            response.data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ||
+            "⚠️ Sorry, translation not available.";
+
+        return translatedText;
+    } catch (error) {
+        console.error(
+            "Gemini Translation API error:",
+            error.response?.data || error.message
+        );
+        return "⚠️ Sorry, there was an error generating the translation.";
+    }
+};
+
+
+module.exports = {
+    getGeminiResponse: generateResponse,
+    getTranslation: generateTranslation
+};
