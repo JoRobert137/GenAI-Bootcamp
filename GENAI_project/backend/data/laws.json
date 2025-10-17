@@ -1,0 +1,146 @@
+{
+  "legalDocuments": [
+    {
+      "id": "constitution_preamble",
+      "title": "Preamble to the Constitution of India",
+      "content": "WE, THE PEOPLE OF INDIA, having solemnly resolved to constitute India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and to secure to all its citizens: JUSTICE, social, economic and political; LIBERTY of thought, expression, belief, faith and worship; EQUALITY of status and of opportunity; and to promote among them all FRATERNITY assuring the dignity of the individual and the unity and integrity of the Nation.",
+      "category": "constitutional",
+      "keywords": ["preamble", "constitution", "sovereign", "secular", "democratic", "republic", "justice", "liberty", "equality", "fraternity"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "fundamental_rights",
+      "title": "Fundamental Rights (Articles 12-35)",
+      "content": "Fundamental Rights are essential human rights guaranteed to all citizens. They include: Right to Equality (Articles 14-18), Right to Freedom (Articles 19-22), Right against Exploitation (Articles 23-24), Right to Freedom of Religion (Articles 25-28), Cultural and Educational Rights (Articles 29-30), Right to Constitutional Remedies (Article 32).",
+      "category": "constitutional",
+      "keywords": ["fundamental rights", "article 14", "equality", "freedom", "religion", "constitutional remedies"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "article_14",
+      "title": "Article 14 - Equality Before Law",
+      "content": "The State shall not deny to any person equality before the law or the equal protection of the laws within the territory of India. This means everyone is equal in the eyes of the law, and the law should treat all persons equally in similar circumstances.",
+      "category": "constitutional",
+      "keywords": ["equality", "article 14", "equal protection", "discrimination"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "article_19",
+      "title": "Article 19 - Protection of Certain Rights Regarding Freedom of Speech",
+      "content": "All citizens shall have the right: (a) to freedom of speech and expression; (b) to assemble peaceably and without arms; (c) to form associations or unions; (d) to move freely throughout the territory of India; (e) to reside and settle in any part of India; (f) omitted by 44th Amendment; (g) to practice any profession, or to carry on any occupation, trade or business.",
+      "category": "constitutional",
+      "keywords": ["freedom of speech", "article 19", "expression", "assembly", "movement", "profession"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "article_21",
+      "title": "Article 21 - Protection of Life and Personal Liberty",
+      "content": "No person shall be deprived of his life or personal liberty except according to procedure established by law. This has been interpreted to include right to live with human dignity, right to privacy, right to clean environment, and right to speedy trial.",
+      "category": "constitutional",
+      "keywords": ["right to life", "personal liberty", "article 21", "privacy", "dignity"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "right_to_education",
+      "title": "Right to Education Act (Article 21A)",
+      "content": "The State shall provide free and compulsory education to all children of the age of six to fourteen years in such manner as the State may, by law, determine. Implemented through Right of Children to Free and Compulsory Education Act, 2009.",
+      "category": "constitutional",
+      "keywords": ["right to education", "article 21a", "free education", "compulsory education", "rte"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "consumer_protection_2019",
+      "title": "Consumer Protection Act, 2019",
+      "content": "An act to provide for protection of the interests of consumers and for the establishment of consumer protection councils and authorities for settlement of consumers' disputes. Key features: Establishment of Central Consumer Protection Authority, simplified dispute resolution, e-filing of complaints, product liability, mediation.",
+      "category": "civil_law",
+      "keywords": ["consumer", "protection", "defective product", "deficient service", "complaint", "consumer court"],
+      "lastUpdated": "2019-08-09"
+    },
+    {
+      "id": "right_to_information_2005",
+      "title": "Right to Information Act, 2005",
+      "content": "An Act to provide for setting out the practical regime of right to information for citizens to secure access to information under the control of public authorities. Citizens can request information by paying ₹10 fee. Authorities must respond within 30 days. Information can be denied only under specific exemptions.",
+      "category": "civil_law",
+      "keywords": ["rti", "right to information", "transparency", "government information", "public authority"],
+      "lastUpdated": "2005-06-15"
+    },
+    {
+      "id": "ipc_498a",
+      "title": "IPC Section 498A - Cruelty by Husband or Relatives",
+      "content": "Whoever, being the husband or the relative of the husband of a woman, subjects such woman to cruelty shall be punished with imprisonment for a term which may extend to three years and shall also be liable to fine. 'Cruelty' includes any wilful conduct of such a nature as is likely to drive the woman to commit suicide or to cause grave injury or danger to life, limb or health.",
+      "category": "criminal_law",
+      "keywords": ["dowry", "cruelty", "498a", "domestic violence", "husband", "relative"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "bns_302",
+      "title": "Bharatiya Nyaya Sanhita Section 302 - Punishment for Murder",
+      "content": "Whoever commits murder shall be punished with death or imprisonment for life, and shall also be liable to fine. Murder is defined as causing death with intention or knowledge that the act is likely to cause death.",
+      "category": "criminal_law",
+      "keywords": ["murder", "bns 302", "homicide", "death penalty", "life imprisonment"],
+      "lastUpdated": "2023-12-25"
+    },
+    {
+      "id": "motor_vehicles_2019",
+      "title": "Motor Vehicles Act, 2019",
+      "content": "An Act to consolidate and amend the law relating to motor vehicles. Key provisions: Increased penalties for traffic violations, compensation for hit-and-run cases, protection of good samaritans, third party insurance mandatory, digital driving licenses.",
+      "category": "civil_law",
+      "keywords": ["motor vehicle", "traffic", "driving license", "insurance", "accident", "compensation"],
+      "lastUpdated": "2019-08-09"
+    },
+    {
+      "id": "gst_2017",
+      "title": "Goods and Services Tax Act, 2017",
+      "content": "GST is a comprehensive indirect tax on the supply of goods and services throughout India. It replaced multiple cascading taxes levied by central and state governments. GST slabs: 0%, 5%, 12%, 18%, 28%. Registration required if turnover exceeds ₹20 lakhs (₹10 lakhs for special category states).",
+      "category": "tax_law",
+      "keywords": ["gst", "goods and services tax", "indirect tax", "registration", "return", "gstin"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "maintenance_law",
+      "title": "Maintenance Rights under Different Laws",
+      "content": "Maintenance rights for women: Under Section 125 CrPC (for all women), Hindu Adoption and Maintenance Act (for Hindus), Muslim Women Act 2019 (for Muslim women). Maintenance includes food, clothing, residence, education, medical expenses. Can be claimed from husband, children, or parents depending on circumstances.",
+      "category": "family_law",
+      "keywords": ["maintenance", "alimony", "wife", "husband", "crpc 125", "support"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "digital_personal_data_2023",
+      "title": "Digital Personal Data Protection Act, 2023",
+      "content": "An Act to provide for the processing of digital personal data in a manner that recognizes both the right of individuals to protect their personal data and the need to process such personal data for lawful purposes. Key rights: Right to information, right to correction and erasure, right of grievance redressal.",
+      "category": "cyber_law",
+      "keywords": ["data protection", "privacy", "digital data", "personal information", "consent"],
+      "lastUpdated": "2023-08-11"
+    },
+    {
+      "id": "environment_protection_1986",
+      "title": "Environment Protection Act, 1986",
+      "content": "An Act to provide for the protection and improvement of environment. It empowers Central Government to take measures for protecting and improving environment, preventing environmental pollution, and tackling specific environmental problems.",
+      "category": "environment_law",
+      "keywords": ["environment", "pollution", "protection", "epa", "conservation"],
+      "lastUpdated": "2023-01-01"
+    },
+    {
+      "id": "medical_termination_1971",
+      "title": "Medical Termination of Pregnancy Act, 1971",
+      "content": "An Act to provide for the termination of certain pregnancies by registered medical practitioners. Pregnancy can be terminated up to 20 weeks with one doctor's opinion, between 20-24 weeks with two doctors' opinion for specific cases. Recent amendments extend limits in certain cases.",
+      "category": "health_law",
+      "keywords": ["abortion", "pregnancy", "termination", "mtp", "medical"],
+      "lastUpdated": "2021-03-25"
+    },
+    {
+      "id": "right_to_food",
+      "title": "National Food Security Act, 2013",
+      "content": "An Act to provide for food and nutritional security by ensuring access to adequate quantity of quality food at affordable prices. Provides 5 kg of food grains per person per month at subsidized prices to eligible households. Pregnant women and lactating mothers entitled to maternity benefits.",
+      "category": "social_welfare",
+      "keywords": ["food security", "ration", "subsidy", "pds", "nutrition"],
+      "lastUpdated": "2013-09-10"
+    }
+  ],
+  "metadata": {
+    "totalDocuments": 17,
+    "lastUpdated": "2024-01-15",
+    "categories": ["constitutional", "criminal_law", "civil_law", "family_law", "tax_law", "cyber_law", "environment_law", "health_law", "social_welfare"],
+    "note": "This is a sample database. For complete and updated legal information, please refer to official government sources and consult legal professionals."
+  }
+}

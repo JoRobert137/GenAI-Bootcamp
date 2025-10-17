@@ -7,7 +7,7 @@ import FeatureNavbar from "../components/FeatureNavbar";
 
 function LawBotPage() {
   const [messages, setMessages] = useState([
-    { role: "bot", structured: [{ type: "text", text: <i>Hello! I’m LawBot ⚖️. How can I help you today?</i> }] },
+    { role: "bot", structured: [{ type: "text", text: <i>Hello! I'm LawBot ⚖️. I now provide accurate legal information from verified sources. How can I help you today?</i> }] },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,60 +21,93 @@ function LawBotPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:8080/api/lawbot", { message: input });
-      const aiReply = response.data.reply;
+      // 1️⃣ Try RAG endpoint first
+      const response = await axios.post("http://localhost:8080/api/lawbot/rag", { 
+        question: input 
+      });
 
       const formattedReply = [];
 
-      if (aiReply.summary) {
-        formattedReply.push({ type: "summary", text: aiReply.summary });
-      }
-
-      if (aiReply.sections?.length) {
-        aiReply.sections.forEach((sec) => {
-          formattedReply.push({ type: "section", title: sec.title, content: sec.content });
+      if (response.data.sources?.length) {
+        formattedReply.push({ 
+          type: "sources", 
+          text: `📚 Verified Sources: ${response.data.sources.map(s => s.title).join(', ')}` 
         });
       }
 
+      formattedReply.push({ 
+        type: "text", 
+        text: response.data.response 
+      });
+
       setMessages((prev) => [...prev, { role: "bot", structured: formattedReply }]);
-    } catch (error) {
-      console.error("LawBot frontend error:", error);
-      setMessages((prev) => [
-        ...prev,
-        { role: "bot", structured: [{ type: "text", text: <i>⚠️ Error connecting to LawBot server.</i> }] },
-      ]);
+
+    } catch (ragError) {
+      console.warn("RAG system unavailable, falling back to Gemini:", ragError);
+
+      try {
+        // 2️⃣ Fallback to Gemini endpoint
+        const fallback = await axios.post("http://localhost:8080/api/lawbot", { 
+          message: input 
+        });
+        const aiReply = fallback.data.reply;
+
+        const formattedReply = [
+          { type: "text", text: <i>⚠️ RAG system unavailable. Using Gemini mode...</i> }
+        ];
+
+        if (aiReply.summary) {
+          formattedReply.push({ type: "summary", text: aiReply.summary });
+        }
+        if (aiReply.sections?.length) {
+          aiReply.sections.forEach((sec) => {
+            formattedReply.push({ type: "section", title: sec.title, content: sec.content });
+          });
+        }
+
+        setMessages((prev) => [...prev, { role: "bot", structured: formattedReply }]);
+
+      } catch (geminiError) {
+        // 3️⃣ Both failed
+        console.error("Both RAG and Gemini failed:", geminiError);
+        setMessages((prev) => [
+          ...prev,
+          { role: "bot", structured: [{ type: "text", text: <i>❌ Error connecting to LawBot server.</i> }] },
+        ]);
+      }
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="flex h-screen bg-blue-50 text-gray-900 pt-16">
       <FeatureNavbar
         pageActionLabel="+ New Chat"
         onActionClick={() => {
-          // clear messages or start a new chat
           setMessages([
-            { role: "bot", structured: [{ type: "text", text: "Hello! I’m LawBot ⚖️. How can I help you today?" }] },
+            { role: "bot", structured: [{ type: "text", text: "Hello! I'm LawBot ⚖️. I now provide accurate legal information from verified sources. How can I help you today?" }] },
           ]);
         }}
       />
       {/* Sidebar */}
       <Sidebar
         title="LawBot ⚖️"
-        subtitle="Your AI Legal Aid"
+        subtitle="Your AI Legal Aid with Verified Sources"
         themeColor="blue"
         newChatLabel="+ New Chat"
         recentChats={["Drafting a rental agreement", "Understanding cyber law", "Filing a complaint letter"]}
-        footerNote="Not a substitute for legal advice."
+        footerNote="Information sourced from Indian legal database"
         appName="CivicConnect AI"
       />
 
       {/* Main Chat Area */}
       <main className="flex-1 flex flex-col bg-white/80 backdrop-blur-sm border-l border-white/20">
         {/* Header */}
-        <header className="p-4 border-b border-white/20 bg-blue-100/50 flex items-center">
-          <h2 className="text-lg font-semibold text-blue-800">LawBot Chat</h2>
+        <header className="p-4 border-b border-white/20 bg-blue-100/50 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-blue-800">LawBot Chat with RAG</h2>
+          <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">✓ Verified Sources</span>
         </header>
 
         {/* Chat Messages */}
@@ -85,7 +118,7 @@ function LawBotPage() {
                 className={`max-w-xl px-4 py-3 rounded-2xl shadow-sm whitespace-pre-wrap ${
                   msg.role === "user"
                     ? "bg-blue-600 text-white rounded-br-none"
-                    : "bg-white text-blue-800 border border-blue-200 rounded-bl-none italic"
+                    : "bg-white text-blue-800 border border-blue-200 rounded-bl-none"
                 }`}
               >
                 {msg.role === "user" ? (
@@ -93,7 +126,13 @@ function LawBotPage() {
                 ) : (
                   Array.isArray(msg.structured) &&
                   msg.structured.map((item, idx) => (
-                    <div key={idx} className="mb-4">
+                    <div key={idx} className="mb-3 last:mb-0">
+                      {item.type === "sources" && (
+                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+                          <p className="text-sm text-blue-700 font-medium">{item.text}</p>
+                        </div>
+                      )}
+
                       {item.type === "summary" && (
                         <p className="font-semibold text-blue-800 mb-2">🧭 Summary: {item.text}</p>
                       )}
@@ -107,12 +146,9 @@ function LawBotPage() {
                                 {c.subheading ? (
                                   <p className="font-semibold">{c.subheading}: <span className="font-normal">{c.text}</span></p>
                                 ) : (
-                                  
-                                <div className="prose prose-blue max-w-none prose-p:my-1 prose-li:my-0 prose-headings:mb-1">
-                                  <ReactMarkdown>{c.text}</ReactMarkdown>
-                                </div>
-
-                                    
+                                  <div className="prose prose-blue max-w-none prose-p:my-1 prose-li:my-0 prose-headings:mb-1">
+                                    <ReactMarkdown>{c.text}</ReactMarkdown>
+                                  </div>
                                 )}
                               </div>
                             ))}
@@ -121,7 +157,7 @@ function LawBotPage() {
                         </div>
                       )}
 
-                      {item.type === "text" && <p>{item.text}</p>}
+                      {item.type === "text" && <div className="prose prose-blue max-w-none">{item.text}</div>}
                     </div>
                   ))
                 )}
@@ -131,8 +167,9 @@ function LawBotPage() {
 
           {loading && (
             <div className="flex justify-start">
-              <div className="bg-white border border-blue-200 px-4 py-2 rounded-2xl italic text-blue-600">
-                🤔 LawBot is thinking...
+              <div className="bg-white border border-blue-200 px-4 py-2 rounded-2xl text-blue-600 flex items-center gap-2">
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                🔍 Searching legal database...
               </div>
             </div>
           )}
@@ -144,12 +181,12 @@ function LawBotPage() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask a legal question..."
+            placeholder="Ask about consumer rights, RTI, fundamental rights..."
             className="flex-1 border border-blue-200 rounded-full px-4 py-2 text-blue-800 placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            onKeyDown={(e) => e.key === "Enter" && handleSend(input)} // Using RAG version
           />
           <button
-            onClick={handleSend}
+            onClick={() => handleSend(input)} // Using RAG version
             disabled={loading}
             className={`px-5 py-2 rounded-full text-white font-semibold transition ${
               loading
@@ -157,7 +194,7 @@ function LawBotPage() {
                 : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
-            {loading ? "Thinking..." : "Send"}
+            {loading ? "Searching..." : "Send"}
           </button>
         </div>
       </main>
