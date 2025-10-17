@@ -235,15 +235,13 @@ npm run build
 
 ## 👥 Contributors
 
-<p align="center">
-  <a href="https://github.com/claudiajerome07"><img src="https://github.com/claudiajerome07" width="80" style="border-radius:50%" /></a>
-  <a href="https://github.com/JoRobert137"><img src="https://github.com/JoRobert137" width="80" style="border-radius:50%" /></a>
-  <a href="https://github.com/jeslinms111-cmyk"><img src="https://github.com/jeslinms111-cmyk" width="80" style="border-radius:50%" /></a>
-  <a href="https://github.com/Tanya-2408"><img src="https://github.com/Tanya-2408" width="80" style="border-radius:50%" /></a>
-  <a href="https://github.com/antonyfelvyns111-afk"><img src="https://github.com/antonyfelvyns111-afk" width="80" style="border-radius:50%" /></a>
-</p>
+A huge thanks to everyone who contributed to **CivicConnect AI** 💙
 
 <p align="center">
-  > Thanks to all our awesome contributors! 🚀
+  <a href="https://github.com/claudiajerome07/GenAI-Bootcamp/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=claudiajerome07/GenAI-Bootcamp&columns=10&padding=10&margin=5" />
+  </a>
 </p>
+
+> Made with ❤️ using [contrib.rocks](https://contrib.rocks) — updates automatically as contributors grow.
 
